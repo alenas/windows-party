@@ -17,6 +17,7 @@ namespace App.ViewModels {
         private string _username;
         private string _password;
         private string _message;
+        private bool _isBusy = false;
         private Visibility _visibility = Visibility.Collapsed;
 
         /// <summary>
@@ -63,6 +64,14 @@ namespace App.ViewModels {
         }
 
         /// <summary>
+        /// Is page busy
+        /// </summary>
+        public bool IsBusy {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
+
+        /// <summary>
         /// Log In Command
         /// </summary>
         public DelegateCommand SignInCommand { get; private set; }
@@ -99,8 +108,11 @@ namespace App.ViewModels {
         /// <summary>
         /// Executes Log In
         /// </summary>
-        /// <returns>Task</returns>
         private async Task SignInAsync() {
+            // already working
+            if (IsBusy) return;
+
+            IsBusy = true;
             Message = String.Empty;
             AuthorizationResult result;
             try {
@@ -113,6 +125,7 @@ namespace App.ViewModels {
             } catch (Exception ex) {
                 Message = ex.Message;
             }
+            IsBusy = false;
         }
 
     }

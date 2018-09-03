@@ -4,6 +4,7 @@
                                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                  xmlns:prismMvvm="using:Prism.Windows.Mvvm"
+                                 xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
                                  prismMvvm:ViewModelLocator.AutoWireViewModel="True"
                                  mc:Ignorable="d">
 
@@ -18,5 +19,11 @@
             <PasswordBox Name="Password" PlaceholderText="Password" Password="{x:Bind Path=ConcreteDataContext.Password, Mode=TwoWay}" Style="{StaticResource PasswordBoxStyle}" />
             <Button Content="Log In" Command="{x:Bind Path=ConcreteDataContext.SignInCommand}" Style="{StaticResource LoginButtonStyle}" />
         </StackPanel>
+        <controls:Loading x:Name="LoadingControl" IsLoading="{x:Bind Path=ConcreteDataContext.IsBusy, Mode=OneWay}" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center">
+            <controls:Loading.Background>
+                <SolidColorBrush Color="Black" Opacity="0.7" />
+            </controls:Loading.Background>
+            <ProgressRing IsActive="True" Foreground="Blue" />
+        </controls:Loading>
     </Grid>
 </prismMvvm:SessionStateAwarePage>

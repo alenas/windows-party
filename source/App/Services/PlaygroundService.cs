@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using RestApiClient.Contracts;
 using RestApiClient;
-using App;
+using RestApiClient.Contracts;
 
 namespace App.Services {
 
@@ -35,6 +31,14 @@ namespace App.Services {
             var result = await client.Authorize(username, password);
             if (result.IsValid) token = result.Token;
             return result;
+        }
+
+        /// <summary>
+        /// Gets a list of servers
+        /// </summary>
+        /// <returns>list of servers</returns>
+        public async Task<ServerResult> GetServers() {
+            return await client.GetServers(token);
         }
 
         /// <summary>
