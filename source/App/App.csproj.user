@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Source>C:\Projects\WindowsParty\source\App\Assets\io-lt.png</Source>
+    <SmallTileSource>C:\Projects\WindowsParty\source\App\Assets\io-lt.png</SmallTileSource>
+    <MediumTileSource>C:\Projects\UWPSample\App\Assets\testio-lt.png</MediumTileSource>
+    <WideTileSource>C:\Projects\UWPSample\App\Assets\testio-lt.png</WideTileSource>
+    <LargeTileSource>C:\Projects\UWPSample\App\Assets\testio-lt.png</LargeTileSource>
+    <AppIconSource>C:\Projects\WindowsParty\source\App\Assets\io-lt.png</AppIconSource>
+    <SplashScreenSource>C:\Projects\UWPSample\App\Assets\testio-lt.png</SplashScreenSource>
+    <PackageLogoSource>C:\Projects\WindowsParty\source\App\Assets\io-lt.png</PackageLogoSource>
+    <ProjectView>ProjectFiles</ProjectView>
+  </PropertyGroup>
+</Project>

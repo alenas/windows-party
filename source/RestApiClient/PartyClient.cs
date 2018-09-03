@@ -32,15 +32,15 @@ namespace RestApiClient {
 		/// <returns>Authorization token or error message</returns>
 		public async Task<AuthorizationResult> Authorize(string username, string password) {
 			AuthorizationResult result = null;
-			try {
-				result = await baseUrl.AppendPathSegment("tokens")
-					.PostUrlEncodedAsync(new {
-						username = username,
-						password = password
-					})
-					.ReceiveJson<AuthorizationResult>();
-			} catch (FlurlHttpTimeoutException) {
-				result = new AuthorizationResult { Message = "Connection timed out" };
+            try {
+                result = await baseUrl.AppendPathSegment("tokens")
+                    .PostUrlEncodedAsync(new {
+                        username = username,
+                        password = password
+                    })
+                    .ReceiveJson<AuthorizationResult>();
+            } catch (FlurlHttpTimeoutException) {
+                result = new AuthorizationResult { Message = "Connection timed out" };
 			} catch (FlurlHttpException ex) {
 				result = new AuthorizationResult { Message = ex.Message };
 			}
