@@ -1,3 +1,10 @@
+# What I have done
+
+I used Prism with Unity, Flurl, Windows Community Tookit, UWP.
+Primary aim was to create an App that runs on Windows 10 mobile as well. Yeah, I still have Lumia :)
+
+I need to finish with some styles, clean up xaml a bit and I will add logging with PostSharp.
+
 # Great task for Great .NET Developer
 
 If you found this task it means we are looking for you!
