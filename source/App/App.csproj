@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="BaseURL.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="PageTokens.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PlaygroundService.cs" />
@@ -119,6 +120,7 @@
   <ItemGroup>
     <Content Include="Assets\background.png" />
     <Content Include="Assets\ico-lock.png" />
+    <Content Include="Assets\ico-logout.png" />
     <Content Include="Assets\ico-username.png" />
     <Content Include="Assets\io-lt.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />

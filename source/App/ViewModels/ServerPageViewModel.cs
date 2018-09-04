@@ -58,7 +58,7 @@ namespace App.ViewModels {
             _navigationService = navigation;
             SignOutCommand = new DelegateCommand(() => SignOut());
         }
- 
+
         /// <summary>
         /// Gets server list after navigating to this page
         /// </summary>
@@ -66,7 +66,13 @@ namespace App.ViewModels {
             base.OnNavigatedTo(e, viewModelState);
             IsBusy = true;
             Task<ServerResult> task = Task.Run(async () => await playground.GetServers());
-            ServerList = task.Result.ServerList;
+            var result = task.Result;
+            if (!string.IsNullOrEmpty(result.Message)) {
+                // TODO: display error message
+                _navigationService.GoBack();
+            } else {
+                ServerList = result.ServerList;
+            }
             IsBusy = false;
         }
 

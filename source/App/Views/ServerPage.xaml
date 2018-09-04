@@ -10,63 +10,60 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
-    <Grid Background="White">
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="logo.Margin" Value="20,0,0,0" />
+                        <Setter Target="btnLogout.Margin" Value="0,0,20,0" />
+                        <Setter Target="rowTop.Height" Value="80" />
+                        <Setter Target="dataGrid.Width" Value="400" />
+                        <Setter Target="testImg.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="logo.Margin" Value="40,00,0,0" />
+                        <Setter Target="btnLogout.Margin" Value="0,0,40,0" />
+                        <Setter Target="rowTop.Height" Value="110" />
+                        <Setter Target="dataGrid.Width" Value="400" />
+                        <Setter Target="testImg.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="110"></RowDefinition>
+            <RowDefinition x:Name="rowTop" Height="110"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <RelativePanel x:Name="relPanel" Grid.Row="0" FlowDirection="LeftToRight"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="110">
-            <Image x:Name="logo" Source="/Assets/testio-dk.png" HorizontalAlignment="Left" VerticalAlignment="Center" Width="115" Height="30" Margin="40,40,0,0" />
-            <Button Content="Logout" VerticalAlignment="Center" Margin="0,40,40,0" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind Path=ConcreteDataContext.SignOutCommand}" />
+        <RelativePanel x:Name="relPanel" Grid.Row="0" FlowDirection="LeftToRight"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="30">
+            <Image x:Name="logo" Source="/Assets/testio-dk.png" HorizontalAlignment="Left" VerticalAlignment="Center" Width="115" Height="30" Margin="40,00,0,0" />
+            <Button x:Name="btnLogout" Content="Logout" VerticalAlignment="Center" Margin="0,0,40,0" RelativePanel.AlignRightWithPanel="True" Command="{x:Bind Path=ConcreteDataContext.SignOutCommand}" Style="{StaticResource LogoutButtonStyle}" />
         </RelativePanel>
-        <RelativePanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup>
-                    <VisualState>
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="500" />
-                        </VisualState.StateTriggers>
-                        <VisualState.Setters>
-                            <Setter Target="testImg.Visibility" Value="Visible"/>
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState>
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="0" />
-                        </VisualState.StateTriggers>
-                        <VisualState.Setters>
-                            <Setter Target="testImg.Visibility" Value="Collapsed"/>
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
-            <controls:DataGrid ItemsSource="{x:Bind Path=ConcreteDataContext.ServerList, Mode=OneWay}"
-        x:Name="dataGrid"
-        Margin="0"
-             Width="360"
-             RelativePanel.AlignLeftWithPanel="True"
-        VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-        HorizontalScrollBarVisibility="Hidden"
-        VerticalScrollBarVisibility="Visible"
-        AlternatingRowBackground="Transparent"
-        AlternatingRowForeground="Gray"
-        AreRowDetailsFrozen="False"
-        AreRowGroupHeadersFrozen="True"
-        AutoGenerateColumns="False"
-        CanUserSortColumns="True"
-        CanUserReorderColumns="False"
-        CanUserResizeColumns="True"
-        ColumnHeaderHeight="32"
-        MaxColumnWidth="240"
-        FrozenColumnCount="0"
-        GridLinesVisibility="Horizontal"
-        HeadersVisibility="Column"
-        IsReadOnly="True"
-        RowDetailsVisibilityMode="Collapsed"
-        SelectionMode="Single">
+        <RelativePanel Grid.Row="1" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <controls:DataGrid x:Name="dataGrid" Margin="0,0" ColumnHeaderStyle="{StaticResource GridHeaderStyle}"
+                CellStyle="{StaticResource GridCellStyle}"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible"
+                AlternatingRowBackground="Transparent" AlternatingRowForeground="Gray"
+                AreRowDetailsFrozen="True" AreRowGroupHeadersFrozen="True"
+                AutoGenerateColumns="False" CanUserSortColumns="True" 
+                CanUserReorderColumns="False" CanUserResizeColumns="True"
+                ColumnHeaderHeight="32" FrozenColumnCount="0"
+                GridLinesVisibility="Horizontal" HeadersVisibility="Column"
+                IsReadOnly="True" RowDetailsVisibilityMode="Collapsed"
+                UseSystemFocusVisuals="False"
+                SelectionMode="Single" ItemsSource="{x:Bind Path=ConcreteDataContext.ServerList, Mode=OneWay}">
                 <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Header="SERVER" HeaderStyle="{StaticResource GridHeaderStyle}" Width="240" Binding="{Binding Name}" Tag="Server" />
-                    <controls:DataGridTextColumn Header="DISTANCE" HeaderStyle="{StaticResource GridHeaderStyle}" Width="120" Binding="{Binding Distance}" Tag="Distance" />
+                    <controls:DataGridTextColumn Header="SERVER" MinWidth="280" Binding="{Binding Name}" Tag="Server" />
+                    <controls:DataGridTextColumn Header="DISTANCE" MinWidth="120" Binding="{Binding Distance}" Tag="Distance" />
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
             <Image x:Name="testImg" Source="/Assets/ServerList.png" HorizontalAlignment="Center"  VerticalAlignment="Center" Stretch="UniformToFill" RelativePanel.RightOf="dataGrid" />

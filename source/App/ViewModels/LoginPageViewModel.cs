@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using App.Services;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
 using RestApiClient.Contracts;
-using Windows.UI.Xaml;
 
 namespace App.ViewModels {
 
@@ -18,7 +18,6 @@ namespace App.ViewModels {
         private string _password;
         private string _message;
         private bool _isBusy = false;
-        private Visibility _visibility = Visibility.Collapsed;
 
         /// <summary>
         /// User Name
@@ -51,16 +50,7 @@ namespace App.ViewModels {
             get => _message;
             set {
                 SetProperty(ref _message, value);
-                MessageVisibility = string.IsNullOrEmpty(_message) ? Visibility.Collapsed : Visibility.Visible;
             }
-        }
-
-        /// <summary>
-        /// Message Visibility
-        /// </summary>
-        public Visibility MessageVisibility {
-            get => _visibility;
-            set => SetProperty(ref _visibility, value);
         }
 
         /// <summary>
@@ -68,7 +58,11 @@ namespace App.ViewModels {
         /// </summary>
         public bool IsBusy {
             get => _isBusy;
-            set => SetProperty(ref _isBusy, value);
+            set {
+                if (SetProperty(ref _isBusy, value)) {
+                    SignInCommand.RaiseCanExecuteChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -97,12 +91,17 @@ namespace App.ViewModels {
             SignInCommand = new DelegateCommand(async () => await SignInAsync(), CanSignIn);
         }
 
+        public override void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState) {
+            base.OnNavigatedTo(e, viewModelState);
+            _navigationService.ClearHistory();
+        }
+
         /// <summary>
-        /// True if user provided credentials
+        /// True if user provided credentials and is not signing in already
         /// </summary>
         /// <returns>true if user provided credentials</returns>
         private bool CanSignIn() {
-            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
+            return !IsBusy && !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
         }
 
         /// <summary>
