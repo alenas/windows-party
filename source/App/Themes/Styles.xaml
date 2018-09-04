@@ -445,6 +445,7 @@
 
     <Style x:Key="GridCellStyle" TargetType="controls:DataGridCell">
         <Setter Property="UseSystemFocusVisuals" Value="False"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
     </Style>
 
 </ResourceDictionary>

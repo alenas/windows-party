@@ -5,3 +5,5 @@
 /source/.vs
 bin
 obj
+/source/App/AppPackages
+/source/App/BundleArtifacts

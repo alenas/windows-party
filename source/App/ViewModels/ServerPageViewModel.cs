@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using App.Services;
 using Model;
@@ -15,7 +13,7 @@ namespace App.ViewModels {
     public class ServerPageViewModel : ViewModelBase {
 
         private bool _isBusy = false;
-        private Server[] _serverList;
+        private IEnumerable<Server> _serverList;
 
         /// <summary>
         /// Playground Service
@@ -43,7 +41,7 @@ namespace App.ViewModels {
         /// <summary>
         /// List of servers
         /// </summary>
-        public Server[] ServerList {
+        public IEnumerable<Server> ServerList {
             get => _serverList;
             set => SetProperty(ref _serverList, value);
         }
@@ -71,7 +69,7 @@ namespace App.ViewModels {
                 // TODO: display error message
                 _navigationService.GoBack();
             } else {
-                ServerList = result.ServerList;
+                ServerList = result.ServerList.OrderBy(s => s.Name);
             }
             IsBusy = false;
         }

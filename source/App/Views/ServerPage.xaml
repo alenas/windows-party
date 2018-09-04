@@ -10,7 +10,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     prismMvvm:ViewModelLocator.AutoWireViewModel="True">
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Mobile">
@@ -21,13 +21,13 @@
                         <Setter Target="logo.Margin" Value="20,0,0,0" />
                         <Setter Target="btnLogout.Margin" Value="0,0,20,0" />
                         <Setter Target="rowTop.Height" Value="80" />
-                        <Setter Target="dataGrid.Width" Value="400" />
                         <Setter Target="testImg.Visibility" Value="Collapsed"/>
+                        <Setter Target="testImg.Width" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="500" />
+                        <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="logo.Margin" Value="40,00,0,0" />
@@ -62,7 +62,7 @@
                 UseSystemFocusVisuals="False"
                 SelectionMode="Single" ItemsSource="{x:Bind Path=ConcreteDataContext.ServerList, Mode=OneWay}">
                 <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Header="SERVER" MinWidth="280" Binding="{Binding Name}" Tag="Server" />
+                    <controls:DataGridTextColumn Header="SERVER" MinWidth="280" Width="*" Binding="{Binding Name}" Tag="Server" />
                     <controls:DataGridTextColumn Header="DISTANCE" MinWidth="120" Binding="{Binding Distance}" Tag="Distance" />
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
