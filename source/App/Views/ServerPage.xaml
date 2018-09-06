@@ -22,7 +22,6 @@
                         <Setter Target="btnLogout.Margin" Value="0,0,20,0" />
                         <Setter Target="rowTop.Height" Value="80" />
                         <Setter Target="testImg.Visibility" Value="Collapsed"/>
-                        <Setter Target="testImg.Width" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
@@ -30,7 +29,7 @@
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="logo.Margin" Value="40,00,0,0" />
+                        <Setter Target="logo.Margin" Value="40,0,0,0" />
                         <Setter Target="btnLogout.Margin" Value="0,0,40,0" />
                         <Setter Target="rowTop.Height" Value="110" />
                         <Setter Target="dataGrid.Width" Value="400" />
@@ -68,12 +67,5 @@
             </controls:DataGrid>
             <Image x:Name="testImg" Source="/Assets/ServerList.png" HorizontalAlignment="Center"  VerticalAlignment="Center" Stretch="UniformToFill" RelativePanel.RightOf="dataGrid" />
         </RelativePanel>
-        <controls:Loading x:Name="LoadingControl" IsLoading="{x:Bind Path=ConcreteDataContext.IsBusy, Mode=OneWay}" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center">
-            <controls:Loading.Background>
-                <SolidColorBrush Color="Black" Opacity="0.7" />
-            </controls:Loading.Background>
-            <ProgressRing IsActive="True" Foreground="Blue" />
-        </controls:Loading>
-
     </Grid>
 </prismMvvm:SessionStateAwarePage>

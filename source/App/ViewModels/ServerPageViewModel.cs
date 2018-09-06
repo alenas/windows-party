@@ -10,6 +10,9 @@ using RestApiClient.Contracts;
 
 namespace App.ViewModels {
 
+    /// <summary>
+    /// Server page view model
+    /// </summary>
     public class ServerPageViewModel : ViewModelBase {
 
         private bool _isBusy = false;
@@ -29,14 +32,6 @@ namespace App.ViewModels {
         /// Log Out Command
         /// </summary>
         public DelegateCommand SignOutCommand { get; private set; }
-
-        /// <summary>
-        /// Is page busy
-        /// </summary>
-        public bool IsBusy {
-            get => _isBusy;
-            set => SetProperty(ref _isBusy, value);
-        }
 
         /// <summary>
         /// List of servers
@@ -60,18 +55,15 @@ namespace App.ViewModels {
         /// <summary>
         /// Gets server list after navigating to this page
         /// </summary>
-        public override void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState) {
+        public override async void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState) {
             base.OnNavigatedTo(e, viewModelState);
-            IsBusy = true;
-            Task<ServerResult> task = Task.Run(async () => await playground.GetServers());
-            var result = task.Result;
+            var result = await playground.GetServers();
             if (!string.IsNullOrEmpty(result.Message)) {
-                // TODO: display error message
-                _navigationService.GoBack();
+                // pass error message to login page
+                _navigationService.Navigate(PageTokens.Login.ToString(), result.Message);
             } else {
-                ServerList = result.ServerList.OrderBy(s => s.Name);
+                if (result.ServerList != null) ServerList = result.ServerList.OrderBy(s => s.Name);
             }
-            IsBusy = false;
         }
 
         /// <summary>
@@ -80,7 +72,7 @@ namespace App.ViewModels {
         private void SignOut() {
             playground.LogOut();
             ServerList = null;
-            _navigationService.GoBack();
+            _navigationService.Navigate(PageTokens.Login.ToString(), null);
         }
 
     }

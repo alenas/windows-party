@@ -8,7 +8,10 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Navigation;
 using App.Services;
+using Windows.System.Profile;
+using Prism.Logging;
 using Microsoft.Practices.Unity;
+using Windows.Foundation.Metadata;
 
 namespace App {
 
@@ -35,16 +38,37 @@ namespace App {
         protected override Task OnInitializeAsync(IActivatedEventArgs args) {
             // Register web services
             Container.RegisterType<IPlaygroundService, PlaygroundService>(new ContainerControlledLifetimeManager());
+            SetupLogging();
             return base.OnInitializeAsync(args);
+        }
+
+        /// <summary>
+        /// Setup postsharp logging to EWT
+        /// </summary>
+        private void SetupLogging() {
+            //var loggingBackend = new EventSourceLoggingBackend(new PostSharpEventSource());
+            //if (loggingBackend.EventSource.ConstructionException != null)
+            //   throw loggingBackend.EventSource.ConstructionException;
+            //LoggingServices.DefaultBackend = loggingBackend;
+            //logger.Write(LogLevel.Info, "Logging enabled");
+           // Logger = new PostSharpLoggingFacade();
+            Logger.Log("----------------Logging started", Category.Info, Priority.Low);
         }
 
 
         /// Extend acrylic into the title bar. 
         private void ExtendAcrylicIntoTitleBar() {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            if (string.Compare(AnalyticsInfo.VersionInfo.DeviceFamily, "Windows.Desktop", true) == 0) {
+                CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+                ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            } else if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar")) {
+                var statusbar = StatusBar.GetForCurrentView();
+                statusbar.BackgroundColor = Colors.DarkBlue;
+                statusbar.BackgroundOpacity = 1;
+                statusbar.ForegroundColor = Colors.White;
+            }
         }
 
         /// <summary>

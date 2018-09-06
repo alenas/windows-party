@@ -5,6 +5,9 @@ using RestApiClient.Contracts;
 
 namespace App.Services {
 
+    /// <summary>
+    /// Service for tesonet playground API
+    /// </summary>
     public class PlaygroundService : IPlaygroundService {
 
         /// <summary>
